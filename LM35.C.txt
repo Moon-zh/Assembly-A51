@@ -1,0 +1,53 @@
+#include  <reg52.h>
+#define uint unsigned int
+#define uchar unsigned char
+#define DATA	P0
+
+uint wdu;
+uchar sw0,gw0,xs0,w1,w2;
+
+sbit	q=P2^6;
+sbit	a=P2^0;
+
+
+void 	delay(uint j)
+{
+	while (j--);
+}
+
+void	LM35()
+{
+
+	uint i,k;
+	DATA=0xff;
+	a=1;		
+	q=0;
+	q=1;
+
+	delay(30);
+
+	q=0;
+	i=DATA;
+	q=1;
+
+	wdu=320.0/255.0*i;
+	sw0=wdu/100;
+	gw0=wdu%100/10;
+	xs0=wdu%100%10;
+
+	DATA=0xff;
+	a=0;
+	q=0;
+	q=1;
+
+	delay(30);
+
+	q=0;
+	k=DATA;
+	q=1;
+
+	wdu=k*3.92;
+	w1=wdu/100;
+	w2=wdu%100/10;
+
+}
